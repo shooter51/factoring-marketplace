@@ -1,0 +1,21 @@
+
+
+FrontEnd:  React in Cloudfront with static assets in s3 bucketBackend: c# Serverless Lambdas in was.Database: RDS Postgressa multi-tenant Web application launched in AWS running in serverless architecture such as Lambda, Cognito, SNS, RDS.in the world of Trucking and Logistics. There are Carriers and There are factoring companies.  
+The Role of a Carrier is to transport Goods.The Role of a Factoring Company is to Provide loans to Carriers to front the cost of the transporting the goods until they are paid by the Client.
+
+We are building a Factoring Company Market Place. Where Factoring Companies can Choose to provide funding options for Carriers who create a Company Profile and lay out their needs.
+
+The application will consist of 3 personas Factoring Company, Carrier, System Administrator.  Each of these personas will have a Dashboard tailored to there experience.  Along with access to features needed from their point of view.
+
+Carriers should be able to create an account adding all sorts of information about their company and their financing needs. Once they have filled everything out they can start looking for funding.  asyncornisly Factoring companies will get notified that there is a new Carrier looking for funding and they can choose to submit a proposal.
+
+The Carrier will get notified each time a new proposal is attached to their funding request.  Ultimately, there should be multiple factoring companies submitting their proposals and the Carrier will be able to accept one of the offers.Factoring companies will be able to upload documents that can be filled out via Automation to put the terms of the funding in.  once a carrier accepts the offer, the Factoring Company will get notified, Documents will be automatically created. And sent over to the Carrier for signature.  
+The Carrier should at that point be able to sign the documents in the application and these should be stored in an imutable database that only that Specific Carrier, and Factoring company can see.Carriers Dashboard:Multi Card/List view with widgets that show Funding Requests current and past. Recent Activity
+Factor Company Dashboard:
+At the top New opportunities:  this lists carriers that are looking for funding and their needs.Multi card/list view of Funding Proposals offered to carriers. As well as Status of those proposals. financials of all proposals.
+Recent activity
+
+Admin Dashboard:this is an internal only view that shows system stats from all of the tenants without giving access to the details of the transactions.
+
+Admins should also have access to User Management console where they can perform actions on users such as disable/password reset, ect
+All users should have a Profile associated with them. As well as authentication and authorization being handled by Cognito. 

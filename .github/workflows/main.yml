@@ -1,0 +1,74 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    
+    - name: Restore Frontend dependencies
+      run: |
+        cd src/Frontend
+        npm ci
+    
+    - name: Build Frontend
+      run: |
+        cd src/Frontend
+        npm run build
+    
+    - name: Test Frontend
+      run: |
+        cd src/Frontend
+        npm test
+    
+    - name: Restore Backend dependencies
+      run: |
+        cd src/Backend
+        dotnet restore
+    
+    - name: Build Backend
+      run: |
+        cd src/Backend
+        dotnet build --no-restore
+    
+    - name: Test Backend
+      run: |
+        cd src/Backend
+        dotnet test --no-build --verbosity normal
+    
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    
+    - name: Deploy to AWS
+      run: |
+        # Add deployment commands here
+        # This will be implemented once we have the infrastructure code 
